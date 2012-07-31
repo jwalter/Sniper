@@ -16,6 +16,8 @@ public class FakeAuctionServer
   private static final String AUCTION_PASSWORD = "auction";
 
   private final String itemId;
+  
+  private final SingleMessageListener messageListener = new SingleMessageListener();
 
   private final XMPPConnection connection;
 
@@ -35,11 +37,24 @@ public class FakeAuctionServer
           
           @Override public void chatCreated(Chat chat, boolean createdLocally) {
             currentChat = chat;
+            chat.addMessageListener(messageListener);
           }
       });
   }
   
   public String getItemId() {
     return itemId;
+  }
+  
+  public void hasReceivedJoinRequestFromSniper() throws InterruptedException {
+    messageListener.reicevesAMessage();
+  }
+  
+  public void announceClosed() throws XMPPException {
+    currentChat.sendMessage(new Message());
+  }
+  
+  public void stop() {
+    connection.disconnect();
   }
 }
