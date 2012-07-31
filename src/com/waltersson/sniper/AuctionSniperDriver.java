@@ -16,7 +16,7 @@ public class AuctionSniperDriver
   }
   
   public void showsSniperStatus(String statusText) {
-    frame.label("").requireText(statusText);
+    frame.label(Main.SNIPER_STATUS_TEXT).requireText(statusText);
   }
 
   public void dispose()
