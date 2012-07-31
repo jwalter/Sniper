@@ -19,4 +19,8 @@ public class AuctionSniperDriver
     frame.label("").requireText(statusText);
   }
 
+  public void dispose()
+  {
+  }
+
 }
