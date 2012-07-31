@@ -6,7 +6,6 @@ public class ApplicationRunner
 {
   public static final String SNIPER_ID = "sniper";
   public static final String SNIPER_PASSWORD = "sniper";
-  private static final String STATUS_JOINING = "Joining";
   private static final String STATUS_LOST = "Lost";
   private AuctionSniperDriver driver;
   private Robot robot;
@@ -29,7 +28,7 @@ public class ApplicationRunner
     thread.setDaemon(true);
     thread.start();
     driver = new AuctionSniperDriver(1000, robot);
-    driver.showsSniperStatus(STATUS_JOINING);
+    driver.showsSniperStatus(MainWindow.STATUS_JOINING);
   }
   
   public void showsSniperHasLostAuction() {

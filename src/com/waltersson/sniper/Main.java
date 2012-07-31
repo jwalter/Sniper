@@ -8,9 +8,7 @@ public class Main
   
   public static final String MAIN_WINDOW_NAME = "Auction Sniper Main";
 
-  public static final String SNIPER_STATUS_TEXT = "sniper status";
-
-  public Main() throws Exception {
+    public Main() throws Exception {
     startUserInterface();
   }
   
