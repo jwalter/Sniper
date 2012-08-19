@@ -10,6 +10,7 @@ import org.jivesoftware.smack.packet.Message;
 
 public class Main
 {
+  @SuppressWarnings("unused") private Chat notToBeGCd;
   private static final int ARG_HOSTNAME = 0;
   private static final int ARG_USERNAME = 1;
   private static final int ARG_PASSWORD = 2;
@@ -29,20 +30,34 @@ public class Main
   public static void main(String... args) throws Exception
   {
     Main main = new Main();
-    XMPPConnection connection = connectTo(args[ARG_HOSTNAME], args[ARG_USERNAME], args[ARG_PASSWORD]);
-    Chat chat = connection.getChatManager().createChat(auctionId(args[ARG_ITEM_ID], connection), new MessageListener() {
+    
+    main.joinAuction(connection(args[ARG_HOSTNAME], args[ARG_USERNAME], args[ARG_PASSWORD]), args[ARG_ITEM_ID]);
+  }
+  
+  private void joinAuction(XMPPConnection connection, String itemId) throws XMPPException
+  {
+    final Chat chat = connection.getChatManager().createChat(auctionId(itemId, connection), new MessageListener() {
 
       @Override
       public void processMessage(Chat aChat, Message message)
       {
-        // nothing yet
+        SwingUtilities.invokeLater(new Runnable() {
+
+          @Override
+          public void run()
+          {
+            ui.showStatus(MainWindow.STATUS_LOST);
+          }
+          
+        });
       }
       
     });
+    this.notToBeGCd = chat;
     chat.sendMessage(new Message());
   }
 
-  private static XMPPConnection connectTo(String hostname, String username, String password) throws XMPPException
+  private static XMPPConnection connection(String hostname, String username, String password) throws XMPPException
   {
     XMPPConnection connection = new XMPPConnection(hostname);
     connection.connect();
