@@ -22,6 +22,8 @@ public class Main
   private MainWindow ui;
   
   public static final String MAIN_WINDOW_NAME = "Auction Sniper Main";
+  public static final String JOIN_COMMAND_FORMAT = null;
+  public static final String BID_COMMAND_FORMAT = "SOLVersion: 1.1; Command: BID; Price: %d;";
 
   public Main() throws Exception {
     startUserInterface();
