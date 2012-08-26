@@ -19,7 +19,7 @@ public class AuctionSniperEndToEndTest extends FestSwingTestCaseTemplate {
     auction.startSellingItem();
     
     application.startBiddingIn(auction);
-    auction.hasReceivedJoinRequestFromSniper();
+    auction.hasReceivedJoinRequestFrom(ApplicationRunner.SNIPER_XMPP_ID);
     
     auction.reportPrice(1000, 98, "other bidder");
     application.hasShownSniperIsBidding();
@@ -43,7 +43,7 @@ public class AuctionSniperEndToEndTest extends FestSwingTestCaseTemplate {
     application = new ApplicationRunner(frameFixture.robot);
     auction.startSellingItem();
     application.startBiddingIn(auction);
-    auction.hasReceivedJoinRequestFromSniper();
+    auction.hasReceivedJoinRequestFrom(ApplicationRunner.SNIPER_XMPP_ID);
     auction.announceClosed();
     application.showsSniperHasLostAuction();
   }
