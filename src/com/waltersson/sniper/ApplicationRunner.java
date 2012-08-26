@@ -6,7 +6,6 @@ public class ApplicationRunner
 {
   public static final String SNIPER_ID = "sniper";
   public static final String SNIPER_PASSWORD = "sniper";
-  private static final String STATUS_LOST = "Lost";
   public static final String SNIPER_XMPP_ID = "sniper@localhost/Auction";
   private AuctionSniperDriver driver;
   private Robot robot;
@@ -32,8 +31,13 @@ public class ApplicationRunner
     driver.showsSniperStatus(MainWindow.STATUS_JOINING);
   }
   
+  public void hasShownSniperIsBidding()
+  {
+    driver.showsSniperStatus(MainWindow.STATUS_BIDDING);
+  }
+
   public void showsSniperHasLostAuction() {
-    driver.showsSniperStatus(STATUS_LOST);
+    driver.showsSniperStatus(MainWindow.STATUS_LOST);
   }
   
   public void stop() {
