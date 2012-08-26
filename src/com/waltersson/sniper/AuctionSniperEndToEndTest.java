@@ -16,7 +16,7 @@ public class AuctionSniperEndToEndTest extends FestSwingTestCaseTemplate {
   private final FakeAuctionServer auction = new FakeAuctionServer("item-54321");
   private ApplicationRunner application;
   
-  public void sniperMakesAHigherBidButLoses() throws Exception {
+  @Test public void sniperMakesAHigherBidButLoses() throws Exception {
     auction.startSellingItem();
     
     application.startBiddingIn(auction);

@@ -40,6 +40,7 @@ public class AuctionSniperDriver
 
   public void dispose()
   {
+    frame.cleanUp();
   }
 
 }

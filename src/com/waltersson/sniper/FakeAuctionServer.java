@@ -2,10 +2,6 @@ package com.waltersson.sniper;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.anything;
-
-import javax.sound.midi.Receiver;
 
 import org.hamcrest.Matcher;
 import org.jivesoftware.smack.Chat;
@@ -64,10 +60,10 @@ public class FakeAuctionServer
     receivesAMessageMatching(sniperId, equalTo(String.format(Main.BID_COMMAND_FORMAT, bid)));
   }
 
-  private void receivesAMessageMatching(String sniperId, Matcher<String> equalTo)
+  private void receivesAMessageMatching(String sniperId, Matcher<String> messageMatcher) throws InterruptedException
   {
-    // TODO Auto-generated method stub
-    
+    messageListener.receivesAMessage(messageMatcher);
+    assertThat(currentChat.getParticipant()).isEqualTo(sniperId);
   }
 
   public void announceClosed() throws XMPPException {
