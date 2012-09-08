@@ -15,14 +15,17 @@ public class SingleMessageListener implements MessageListener
 {
   private final ArrayBlockingQueue<Message> messages = new ArrayBlockingQueue<>(1);
 
-  @Override public void processMessage(Chat chat, Message message) {
+  @Override
+  public void processMessage(Chat chat, Message message)
+  {
     messages.add(message);
   }
-  
-  public void receivesAMessage() throws InterruptedException {
+
+  public void receivesAMessage() throws InterruptedException
+  {
     assertThat(messages.poll(5, TimeUnit.SECONDS)).isNotNull();
   }
-  
+
   public void receivesAMessage(Matcher<? super String> messageMatcher) throws InterruptedException
   {
     final Message message = messages.poll(5, TimeUnit.SECONDS);

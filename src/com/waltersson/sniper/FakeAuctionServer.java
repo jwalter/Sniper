@@ -13,19 +13,12 @@ import org.jivesoftware.smack.packet.Message;
 public class FakeAuctionServer
 {
   public static final String ITEM_ID_AS_LOGIN = "auction-%s";
-
   public static final String AUCTION_RESOURCE = "Auction";
-
   public static final String XMPP_HOSTNAME = "localhost";
-
   private static final String AUCTION_PASSWORD = "auction";
-
   private final String itemId;
-  
   private final SingleMessageListener messageListener = new SingleMessageListener();
-
   private final XMPPConnection connection;
-
   private Chat currentChat;
 
   public FakeAuctionServer(String itemId)
@@ -34,27 +27,31 @@ public class FakeAuctionServer
     this.connection = new XMPPConnection(XMPP_HOSTNAME);
   }
 
-  public void startSellingItem() throws XMPPException {
+  public void startSellingItem() throws XMPPException
+  {
     connection.connect();
     connection.login(String.format(ITEM_ID_AS_LOGIN, itemId), AUCTION_PASSWORD, AUCTION_RESOURCE);
-    connection.getChatManager().addChatListener(
-      new ChatManagerListener() {
-          
-          @Override public void chatCreated(Chat chat, boolean createdLocally) {
-            currentChat = chat;
-            chat.addMessageListener(messageListener);
-          }
+    connection.getChatManager().addChatListener(new ChatManagerListener()
+      {
+        @Override
+        public void chatCreated(Chat chat, boolean createdLocally)
+        {
+          currentChat = chat;
+          chat.addMessageListener(messageListener);
+        }
       });
   }
-  
-  public String getItemId() {
+
+  public String getItemId()
+  {
     return itemId;
   }
-  
-  public void hasReceivedJoinRequestFrom(String sniperId) throws InterruptedException {
+
+  public void hasReceivedJoinRequestFrom(String sniperId) throws InterruptedException
+  {
     receivesAMessageMatching(sniperId, equalTo(Main.JOIN_COMMAND_FORMAT));
   }
-  
+
   public void hasReceivedBid(int bid, String sniperId) throws InterruptedException
   {
     receivesAMessageMatching(sniperId, equalTo(String.format(Main.BID_COMMAND_FORMAT, bid)));
@@ -66,11 +63,13 @@ public class FakeAuctionServer
     assertThat(currentChat.getParticipant()).isEqualTo(sniperId);
   }
 
-  public void announceClosed() throws XMPPException {
+  public void announceClosed() throws XMPPException
+  {
     currentChat.sendMessage(new Message());
   }
-  
-  public void stop() {
+
+  public void stop()
+  {
     connection.disconnect();
   }
 

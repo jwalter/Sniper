@@ -12,51 +12,59 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class AuctionSniperEndToEndTest extends FestSwingTestCaseTemplate {
+public class AuctionSniperEndToEndTest extends FestSwingTestCaseTemplate
+{
   private final FakeAuctionServer auction = new FakeAuctionServer("item-54321");
   private ApplicationRunner application;
-  
-  @Test public void sniperMakesAHigherBidButLoses() throws Exception {
+
+  @Test
+  public void sniperMakesAHigherBidButLoses() throws Exception
+  {
     auction.startSellingItem();
-    
     application.startBiddingIn(auction);
     auction.hasReceivedJoinRequestFrom(ApplicationRunner.SNIPER_XMPP_ID);
-    
     auction.reportPrice(1000, 98, "other bidder");
     application.hasShownSniperIsBidding();
-    
     auction.hasReceivedBid(1098, ApplicationRunner.SNIPER_XMPP_ID);
-    
     auction.announceClosed();
     application.showsSniperHasLostAuction();
   }
-  
-  @Test public void sniperJoinsAuctionUntilAuctionCloses() throws Exception {
+
+  @Test
+  public void sniperJoinsAuctionUntilAuctionCloses() throws Exception
+  {
     auction.startSellingItem();
     application.startBiddingIn(auction);
     auction.hasReceivedJoinRequestFrom(ApplicationRunner.SNIPER_XMPP_ID);
     auction.announceClosed();
     application.showsSniperHasLostAuction();
   }
-  
-  @Before public void createApplicationRunner() {
-    JFrame frame = GuiActionRunner.execute(new GuiQuery<JFrame>() {
 
-      @Override protected JFrame executeInEDT() throws Throwable {
-        return new JFrame();
-      }
-      
-    });
+  @Before
+  public void createApplicationRunner()
+  {
+    JFrame frame = GuiActionRunner.execute(new GuiQuery<JFrame>()
+      {
+        @Override
+        protected JFrame executeInEDT() throws Throwable
+        {
+          return new JFrame();
+        }
+      });
     FrameFixture frameFixture = new FrameFixture(frame);
     assertThat(frameFixture.robot).isNotNull();
     application = new ApplicationRunner(frameFixture.robot);
   }
-  
-  @After public void stopAuction() {
+
+  @After
+  public void stopAuction()
+  {
     auction.stop();
   }
-  
-  @After public void stopApplication() {
+
+  @After
+  public void stopApplication()
+  {
     application.stop();
   }
 }

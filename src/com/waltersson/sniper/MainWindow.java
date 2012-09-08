@@ -8,13 +8,15 @@ import javax.swing.border.LineBorder;
 
 public class MainWindow extends JFrame
 {
+  private static final long serialVersionUID = -6762366682793386842L;
   public static final String SNIPER_STATUS_NAME = "sniper status";
   public static final String STATUS_JOINING = "Joining";
   public static final String STATUS_LOST = "Lost";
   public static final String STATUS_BIDDING = "Bidding";
   private final JLabel sniperStatus = createLabel(STATUS_JOINING);
-  
-  public MainWindow() {
+
+  public MainWindow()
+  {
     super("Auction Sniper");
     setName(Main.MAIN_WINDOW_NAME);
     add(sniperStatus);
